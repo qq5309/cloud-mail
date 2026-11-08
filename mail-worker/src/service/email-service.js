@@ -439,9 +439,13 @@ const emailService = {
 
 		}
 
-		//非管理员账号禁止发送附件（2026-11-08 按用户要求添加）
+		//非管理员账号禁止发送附件和正文图片（2026-11-08 按用户要求添加）
 		if (c.env.admin !== userRow.email && attachments.length > 0) {
 				throw new BizError('发邮件不支持附件', 403);
+		}
+
+		if (c.env.admin !== userRow.email && imageDataList.length > 0) {
+				throw new BizError('发邮件不支持图片', 403);
 		}
 
 		const sendParams = {
